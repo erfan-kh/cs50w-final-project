@@ -1,0 +1,75 @@
+{% extends "layout.html" %} <!-- Extend the base layout -->
+{% load static %}
+
+{% block body %} <!-- Start of body block -->
+<!-- Load the main.js script -->
+
+
+{% if user.is_authenticated %} <!-- Check if the user is authenticated -->
+<script src="{% static 'js/main.js' %}"></script>
+    <div class="tstt">
+
+
+        <!-- Button to get the status of the sensor -->
+        <div class="d-flex justify-content-center">
+            <Button id="status" class="btn btn-info m-2" href="{% url 'sensor' %}">
+                <i class="fas fa-tachometer-alt"></i> Get Status
+            </Button>
+        </div>
+
+        <!-- Buttons to turn on and off the sensor -->
+        <div class="d-flex justify-content-center">
+            <button id="on" class="btn btn-success m-2" href="{% url 'on' %}">
+                <i class="fas fa-power-off"></i> Turn on
+            </button>
+            <button id="off" class="btn btn-danger m-2" href="{% url 'off' %}">
+                <i class="fas fa-power-off"></i> Turn Off
+            </button>
+        </div>
+
+        <!-- Display the sensor value and LED status -->
+        <div class="d-flex justify-content-center">
+            <span id="mysens" class="btn btn-primary btn-lg disabled m-2">Sensor Value is : {{ Ultrasonic }}</span>
+            <span id="myledstatus" class="btn btn-primary btn-lg disabled m-2">LED Status is : {{ value }}</span>
+        </div>
+
+        <!-- Display the battery level -->
+        <div id="battery">
+            <div id="level"></div>
+        </div>
+        <div class="bottom-center">
+            <h4 id="lvl">{{ Ultrasonic }}%</h4>
+        </div>
+
+        <!-- Display an image based on the LED status -->
+        <div class="d-flex justify-content-center">
+            {% if value == "ON" %}
+                <img src="/static/lamp-on.png" alt="Lamp_on">
+            {% endif %}
+            {% if value == "OFF" %}
+                <img src="/static/lamp-off.png" alt="Lamp_off">
+            {% endif %}
+        </div>
+
+        <!-- Display an image -->
+        <div class="d-flex justify-content-center">
+            <img id="myImage" alt="Lamp_on">
+        </div>
+
+{% else %} <!-- If the user is not authenticated -->
+
+    <!-- Display a message asking the user to log in -->
+    <div class="center">
+        <P> Please Log In to Continue </p>
+    </div>
+    <div class="center">
+        <a class="btn btn-success m-2 " href="{% url 'login' %}">
+            <i class="fas fa-power-off"></i> login
+        </a>
+    </div>
+
+{% endif %}
+
+</div>
+
+{% endblock %} <!-- End of body block -->

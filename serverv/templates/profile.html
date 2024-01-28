@@ -1,0 +1,57 @@
+{% extends "layout.html" %} <!-- Extend the base layout -->
+{% load custom_filters %}
+{% block body %} <!-- Start of body block -->
+
+    <!-- Display the username in the center -->
+    <div class="d-flex justify-content-center">
+        <h1>🕵️‍♀️{{ username }}🕵️‍♀️</h1>
+    </div>
+
+    <!-- Check if the user is authenticated and if the user is the profile owner -->
+    {% if user.is_authenticated %}
+        {% if user == user_profile %}
+
+            <!-- Create a table to display the posts -->
+            <div class="d-flex justify-content-center">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col" class="text-center">Row</th>
+                            <th scope="col" class="text-center">User</th>
+                            <th scope="col" class="text-center">Sensor Value</th>
+                            <th scope="col" class="text-center">Date</th>
+                        </tr>
+                    </thead>
+
+                    <!-- Loop through the posts and create a table row for each post -->
+                    {% for post in posts_of_the_page %}
+                        <tbody>
+                            <tr>
+                                <th scope="row" class="text-center">{{ counter|add:"1"|subtract:forloop.counter0|subtract:posts_of_the_page.start_index }}</th>
+                                <td scope="user" class="text-center">{{ post.user }}</td>
+                                <td scope="Value" class="text-center">{{ post.content }}</td>
+                                <td scope="Time" class="text-center">{{ post.date }}</td>
+                            </tr>
+                        </tbody>
+                    {% endfor %}
+                </table>
+            </div>
+
+            <!-- Create a pagination navigation bar -->
+            <nav aria-label="Page navigation example">
+                <ul class="pagination d-flex justify-content-center">
+                    
+                    {% if posts_of_the_page.has_previous %}
+                        <li class="page-item"><a class="page-link" href="?page={{ posts_of_the_page.previous_page_number }}">Previous</a></li>
+                    {% endif %}
+                    {% if posts_of_the_page.has_next %}
+                        <li class="page-item"><a class="page-link" href="?page={{ posts_of_the_page.next_page_number }}">Next</a></li>
+                    {% endif %}
+                </ul>
+                
+            </nav>
+
+        {% endif %}
+    {% endif %}
+            <i class="btn btn-info m-2 d-flex justify-content-center">Page {{ page_number }} Of {{total_pages}}</i>
+{% endblock %} <!-- End of body block -->

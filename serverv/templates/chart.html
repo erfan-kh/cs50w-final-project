@@ -1,0 +1,44 @@
+{% extends "layout.html" %} <!-- Extend the base layout -->
+{% load static %}
+
+{% block body %} <!-- Start of body block -->
+<!-- Load the chart.js script -->
+
+
+{% if user.is_authenticated %} <!-- Check if the user is authenticated -->
+<script src="{% static 'js/chart.js' %}"></script>
+<!-- On page load, call the 'chart' function with the provided parameters -->
+<body onload="chart({{ years }}, {{ months }}, {{ days }}, {{ hours }}, {{ minutes }}, {{ seconds }}, {{ sensorValues }})">
+
+    <div class="d-flex justify-content-center">
+        <!-- Add a dropdown list for the time unit -->
+        <select id="timeUnit" onchange="updateChart()" class="btn btn-info m-2">
+            <option value="year">Year</option>
+            <option value="month">Month</option>
+            <option value="day">Day</option>
+            <option value="hour" selected>Hour</option>
+            <option value="minute">Minute</option>
+            <option value="second">second</option>
+        </select>
+
+        <!-- Add a dropdown list for the div width -->
+        <select id="divWidth" onchange="updateDivWidth()" class="btn btn-info m-2">
+            <option value="100%">100%</option>
+            <option value="200%">200%</option>
+            <option value="300%">300%</option>
+            <option value="400%" selected>400%</option>
+        </select>
+
+        <!-- Replace the dropdown list with a search box for the specific day -->
+        <input type="text" id="specificDay" onchange="updateChart()" placeholder="mm/dd/yyyy" class="btn btn-info m-2">
+    </div>
+
+    <!-- Div to contain the chart -->
+    <div id="chartDiv" style="width: 500%;">
+        <!-- Canvas element where the chart will be drawn -->
+        <canvas id="myChart"></canvas>
+    </div>
+
+{% endif %}
+
+{% endblock %} <!-- End of body block -->

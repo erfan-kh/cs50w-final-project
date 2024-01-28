@@ -1,0 +1,37 @@
+{% extends "layout.html" %} <!-- Extending the base layout -->
+
+{% block body %} <!-- Starting the body block -->
+
+    <h2>Register</h2> <!-- Registration heading -->
+
+    {% if message %} <!-- If there is a message, display it -->
+        <div>{{ message }}</div>
+    {% endif %}
+
+    <!-- Registration form starts here -->
+    <form action="{% url 'register' %}" method="post">
+        {% csrf_token %} <!-- CSRF token for security -->
+        <div class="form-group">
+            <!-- Input field for username -->
+            <input class="form-control" autofocus type="text" name="username" placeholder="Username">
+        </div>
+        <div class="form-group">
+            <!-- Input field for email -->
+            <input class="form-control" type="email" name="email" placeholder="Email Address">
+        </div>
+        <div class="form-group">
+            <!-- Input field for password -->
+            <input class="form-control" type="password" name="password" placeholder="Password">
+        </div>
+        <div class="form-group">
+            <!-- Input field for password confirmation -->
+            <input class="form-control" type="password" name="confirmation" placeholder="Confirm Password">
+        </div>
+        <!-- Submit button for the form -->
+        <input class="btn btn-primary" type="submit" value="Register">
+    </form>
+
+    <!-- Link to login page for users who already have an account -->
+    Already have an account? <a href="{% url 'login' %}">Log In here.</a>
+
+{% endblock %} <!-- Ending the body block -->
