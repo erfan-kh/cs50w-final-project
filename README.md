@@ -317,4 +317,10 @@ function filterBySpecificDay(specificDay) {
     return { labels: filteredLabels, dataset: filteredDataset };
 }
 ```
+
 ---------------------------------------------------------------------------------------------------------------------------------
+
+
+## Contributing
+This is a learning project, but feedback and suggestions are welcome.
+Feel free to open an issue or discussion.
